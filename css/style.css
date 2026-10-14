@@ -1,10 +1,11 @@
 /* Better Data Group — Modernist Poster identity.
    Prescriptive source: docs/brand/VISUAL-IDENTITY.md (status: approved direction).
    Single accent: brand orange #eb5d1e (old-site provenance, verified).
+   Paper field: plain white #ffffff (old site's background; warm cream retired).
    System fonts only, no webfonts, no pills, no soft cards, no teal, no green. */
 
 :root {
-  --cream: #faf6ef;
+  --cream: #ffffff;
   --ink: #181818;
   --muted: #5c6066;
   --orange: #eb5d1e;
