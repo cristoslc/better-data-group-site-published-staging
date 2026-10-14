@@ -1,0 +1,235 @@
+/* Better Data Group — single stylesheet, no framework, no webfonts.
+   Editorial, warm, calm: cream field, ink text, one green accent. */
+
+:root {
+  --cream: #faf6ef;
+  --ink: #23282d;
+  --muted: #5c6066;
+  --green: #2e6e4e;
+  --green-dark: #245740;
+  --card: #ffffff;
+  --radius: 14px;
+  --maxw: 68rem;
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+a { color: var(--green); }
+a:hover { color: var(--green-dark); }
+
+/* --- Access: skip link ------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 8px 0;
+  z-index: 50;
+}
+.skip-link:focus { left: 0; color: var(--cream); }
+
+/* --- Header ------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: color-mix(in srgb, var(--cream) 92%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
+  z-index: 10;
+}
+.site-header nav {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+.brand img { display: block; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a { text-decoration: none; color: var(--ink); font-weight: 500; }
+.nav-links a:hover { color: var(--green); }
+.nav-links a[aria-current="page"] { color: var(--green); }
+.nav-cta {
+  background: var(--green);
+  color: #fff !important;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+}
+.nav-cta:hover { background: var(--green-dark); color: #fff !important; }
+
+/* --- Typography -------------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  color: var(--ink);
+}
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); margin: 0 0 0.6rem; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin: 0 0 0.75rem; }
+h3 { font-size: 1.2rem; margin: 0 0 0.5rem; }
+p { margin: 0 0 1rem; }
+
+/* --- Hero -------------------------------------------------------------- */
+.hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(3rem, 9vw, 6.5rem) 1.25rem 3rem;
+}
+.tagline {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.hero-lede {
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  color: var(--muted);
+  max-width: 44rem;
+}
+.hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.75rem; }
+
+/* --- Buttons ----------------------------------------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.btn-primary { background: var(--green); color: #fff; }
+.btn-primary:hover { background: var(--green-dark); color: #fff; }
+.btn-ghost { border: 1.5px solid var(--ink); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+
+/* --- Sections ---------------------------------------------------------- */
+.services-preview,
+.people-strip,
+.cta-strip,
+.page-head {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem;
+}
+.services-preview h2,
+.people-strip h2 { margin-top: 0.5rem; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.25rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid rgb(0 0 0 / 7%);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+}
+.card h3 a { text-decoration: none; }
+.card h3 a:hover { text-decoration: underline; }
+.card p { color: var(--muted); margin: 0; }
+
+.people-strip p { color: var(--muted); max-width: 44rem; }
+.people-strip a { font-weight: 600; }
+
+.cta-strip {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: var(--radius);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.cta-strip h2 { color: var(--cream); }
+.cta-strip p { color: rgb(250 246 239 / 75%); }
+.cta-strip .btn-primary { background: var(--cream); color: var(--ink); }
+.cta-strip .btn-primary:hover { background: #fff; }
+
+/* --- Page head + items -------------------------------------------------- */
+.page-head { padding-bottom: 0.5rem; }
+.work-item {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  border-top: 1px solid rgb(0 0 0 / 8%);
+}
+.work-item:last-of-type { border-bottom: 1px solid rgb(0 0 0 / 8%); }
+.work-item p { max-width: 44rem; color: var(--muted); }
+.work-item h2 { color: var(--green); }
+.work-item p:first-of-type { color: var(--ink); font-size: 1.15rem; }
+
+/* --- Bios --------------------------------------------------------------- */
+.bio {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  border-top: 1px solid rgb(0 0 0 / 8%);
+}
+.bio p { max-width: 44rem; }
+.bio h2 { color: var(--green); }
+
+.contact-routes {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+/* --- Footer ------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid rgb(0 0 0 / 10%);
+  background: var(--cream);
+}
+.site-footer p {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* --- Focus visibility ---------------------------------------------------- */
+a:focus-visible, .btn:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@media (max-width: 40rem) {
+  .site-header nav { flex-wrap: wrap; }
+  .nav-links { gap: 0.9rem; font-size: 0.95rem; }
+}
