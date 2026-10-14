@@ -5,7 +5,7 @@
    System fonts only, no webfonts, no pills, no soft cards, no teal, no green. */
 
 :root {
-  --cream: #ffffff;
+  --cream: #f4f7fb;
   --ink: #181818;
   --muted: #5c6066;
   --orange: #eb5d1e;
