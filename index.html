@@ -17,11 +17,24 @@
         <img src="img/bdg-logo.png" alt="Better Data Group logo" width="64" height="70">
         <span>Better Data Group</span>
       </a>
-      <ul class="nav-links">
+      <div class="nav-right">
+        <ul class="nav-links">
         <li><a href="work.html">Services</a></li>
         <li><a href="about.html">About</a></li>
         <li><a class="btn btn-primary nav-cta" href="contact.html">Contact</a></li>
-      </ul>
+        </ul>
+        <fieldset class="theme-switch">
+          <legend class="visually-hidden">Color theme</legend>
+          <div class="theme-switch-options">
+            <input type="radio" name="theme" id="theme-auto" value="auto" checked>
+            <label for="theme-auto">Auto</label>
+            <input type="radio" name="theme" id="theme-light" value="light">
+            <label for="theme-light">Light</label>
+            <input type="radio" name="theme" id="theme-dark" value="dark">
+            <label for="theme-dark">Dark</label>
+          </div>
+        </fieldset>
+      </div>
     </nav>
   </header>
 
@@ -87,5 +100,6 @@
   <footer class="site-footer">
     <p>© 2015–2026 Better Data Group. Site design: <a href="https://cristoslc.com">Cristos L-C</a>.</p>
   </footer>
+  <script src="js/theme.js" defer></script>
 </body>
 </html>

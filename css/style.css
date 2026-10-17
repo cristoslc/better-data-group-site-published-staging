@@ -1,18 +1,27 @@
 /* Better Data Group — Modernist Poster identity.
    Prescriptive source: docs/brand/VISUAL-IDENTITY.md (status: approved direction).
    Single accent: brighter poster orange #ff6a24 (operator-approved variant of the old-site orange #eb5d1e, which is recorded as the historical source color).
-   Paper field: plain white #ffffff (old site's background; warm cream retired).
-   System fonts only, no webfonts, no pills, no soft cards, no teal, no green. */
+   Paper field: porcelain #f4f7fb (cool tint; plain white and warm cream retired).
+   System fonts only, no webfonts, no pills, no soft cards, no teal, no green.
+   Themes: light (default) and dark, selected by the OS preference or by an
+   explicit [data-theme] choice; see the theme override layer below. */
 
 :root {
-  --cream: #f4f7fb;
-  --ink: #14243b;
-  --muted: #5c6066;
-  --orange: #ff6a24;
+  /* --- Palette primitives: the identity anchors. These never change ------- */
+  --cream: #f4f7fb;   /* porcelain paper */
+  --ink: #14243b;     /* identity navy */
+  --muted: #5c6066;   /* quiet gray, light theme */
+  --orange: #ff6a24;  /* poster orange, the only accent */
+
+  /* --- Semantic roles: single source of truth, light theme values -------- */
+  --bg: var(--cream);       /* page ground */
+  --fg: var(--ink);         /* default text and rules on the ground */
+  --rule-color: var(--ink); /* structural rules on the ground */
+  --focus: var(--fg);       /* focus ring follows the surrounding field */
+
   --rule: 3px;
   --rule-heavy: 4px;
   --rule-fine: 1px;
-  --focus: var(--ink);
   --font-display: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --type-poster: clamp(3rem, 8.5vw, 8rem);
@@ -33,44 +42,81 @@
   --logo-header: 64px;
 }
 
+/* --- Theme override layer --------------------------------------------------
+   Only the semantic roles change between themes; the primitives (porcelain,
+   navy, orange) never change, so dark is the identity inverted rather than a
+   second palette. An explicit [data-theme] choice beats the OS preference:
+   [data-theme="light"] suppresses the dark media block, and [data-theme="dark"]
+   applies dark even when the OS is light. Without JavaScript no [data-theme]
+   is set and the site follows the OS. The dark ground is a cool near-black
+   (#0b1220) while every navy band and the footer keep --ink: near-black only
+   replaces the paper ground, so the field system is unchanged and the 3px
+   porcelain rules keep the poster's sharp divisions (a fill step between two
+   dark fields is too slight to carry the division on its own). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1220;
+    --fg: var(--cream);
+    --muted: #98a6ba;
+    --rule-color: var(--cream);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --fg: var(--cream);
+  --muted: #98a6ba;
+  --rule-color: var(--cream);
+}
+
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-body);
   font-size: var(--type-body);
   line-height: 1.6;
 }
 
 /* --- Access ------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--fg);
+  color: var(--bg);
   padding: var(--space-2) var(--space-3);
   z-index: 50;
 }
-.skip-link:focus { left: 0; color: var(--cream); }
+.skip-link:focus { left: 0; }
 
 :where(a, button, .btn):focus-visible {
   outline: 4px solid var(--focus);
   outline-offset: 4px;
 }
-.field-ink { --focus: var(--cream); }
+.field-ink { --focus: var(--cream); --rule-color: var(--cream); }
 .field-orange { --focus: var(--ink); }
 
 /* --- Header ------------------------------------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
-  background: var(--cream);
-  border-bottom: var(--rule) solid var(--ink);
+  background: var(--bg);
+  border-bottom: var(--rule) solid var(--rule-color);
   z-index: 10;
 }
 .site-header nav {
@@ -83,12 +129,18 @@ body {
   gap: var(--space-4);
   flex-wrap: wrap;
 }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
 .brand {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--fg);
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 700;
@@ -106,7 +158,7 @@ body {
 }
 .nav-links a {
   text-decoration: none;
-  color: var(--ink);
+  color: var(--fg);
   font-size: var(--type-label);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -115,7 +167,59 @@ body {
 }
 .nav-links a[aria-current="page"] {
   border-bottom: var(--rule) solid var(--orange);
-  color: var(--ink);
+  color: var(--fg);
+}
+
+/* --- Theme switcher -------------------------------------------------------
+   A fieldset of three radios, styled as a segmented control that matches the
+   buttons (zero radius, 2px solid borders, 44px minimum target). Radios are
+   used rather than aria-pressed buttons because the browser gives native
+   single-selection semantics, a "1 of 3" announcement, and arrow-key movement
+   between options with no scripting; the visible label is the accessible name
+   and the legend names the group. The input stays in the focus order and its
+   :checked state drives the visual segment, so the control is coherent even
+   before any script runs. */
+.theme-switch {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+.theme-switch-options {
+  display: inline-flex;
+  border: 2px solid var(--fg);
+}
+.theme-switch-options input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+.theme-switch-options label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 0.625rem;
+  border-left: 2px solid var(--fg);
+  color: var(--fg);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.theme-switch-options label:first-of-type { border-left: none; }
+.theme-switch-options input:checked + label {
+  background: var(--fg);
+  color: var(--bg);
+}
+.theme-switch-options input:focus-visible + label {
+  outline: 4px solid var(--focus);
+  outline-offset: 4px;
 }
 
 /* --- Buttons ------------------------------------------------------------- */
@@ -123,7 +227,7 @@ body {
   display: inline-block;
   padding: 0.875rem 1.25rem;
   min-height: 44px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--fg);
   background: var(--orange);
   color: var(--ink);
   font-family: var(--font-body);
@@ -133,15 +237,15 @@ body {
   text-align: center;
   transition: none;
 }
-.btn-primary:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-.btn-primary:active { box-shadow: inset 0 0 0 2px var(--cream); }
+.btn-primary:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn-primary:active { box-shadow: inset 0 0 0 2px var(--bg); }
 .btn-ghost {
   background: transparent;
-  color: var(--ink);
-  border: 2px solid var(--ink);
+  color: var(--fg);
+  border: 2px solid var(--fg);
 }
-.btn-ghost:hover { background: var(--ink); color: var(--cream); }
-.btn-ghost:active { box-shadow: inset 0 0 0 2px var(--cream); }
+.btn-ghost:hover { background: var(--fg); color: var(--bg); }
+.btn-ghost:active { box-shadow: inset 0 0 0 2px var(--bg); }
 /* Button states on ink fields */
 .field-ink .btn-primary { border-color: var(--orange); }
 .field-ink .btn-primary:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
@@ -156,7 +260,7 @@ body {
 /* --- Typography ---------------------------------------------------------- */
 h1, h2, h3 {
   font-family: var(--font-display);
-  color: var(--ink);
+  color: var(--fg);
   margin: 0 0 var(--space-2);
 }
 h1 {
@@ -185,7 +289,7 @@ p { margin: 0 0 var(--space-2); }
 .lead {
   font-size: var(--type-lead);
   line-height: 1.5;
-  color: var(--ink);
+  color: var(--fg);
 }
 .measure { max-width: var(--measure); }
 
@@ -196,7 +300,7 @@ p { margin: 0 0 var(--space-2); }
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--fg);
   border-bottom: var(--rule-heavy) solid var(--orange);
   padding-bottom: 0.25rem;
   margin: 0 0 var(--space-4);
@@ -218,7 +322,7 @@ p { margin: 0 0 var(--space-2); }
 }
 
 /* --- Fields (full-width section colors) ---------------------------------- */
-.field-paper { background: var(--cream); color: var(--ink); }
+.field-paper { background: var(--bg); color: var(--fg); }
 .field-ink {
   background: var(--ink);
   color: var(--cream);
@@ -241,13 +345,13 @@ p { margin: 0 0 var(--space-2); }
 
 /* --- Panels and numbered entries (replaces cards) ------------------------- */
 .panel-group {
-  border-top: var(--rule) solid var(--ink);
+  border-top: var(--rule) solid var(--rule-color);
 }
 .panel-item {
   max-width: var(--maxw);
   margin: 0 auto;
   padding: var(--space-4) var(--gutter);
-  border-bottom: var(--rule-fine) solid var(--ink);
+  border-bottom: var(--rule-fine) solid var(--rule-color);
 }
 .panel-item:last-of-type { border-bottom: none; }
 .entry-head {
@@ -261,7 +365,7 @@ p { margin: 0 0 var(--space-2); }
   font-size: var(--type-panel);
   font-weight: 900;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--fg);
 }
 .entry-number::after {
   content: "";
@@ -287,7 +391,7 @@ p { margin: 0 0 var(--space-2); }
 .title-link:hover { text-decoration-color: inherit; }
 .muted-lead { max-width: var(--measure); color: var(--muted); }
 .link-heavy {
-  color: var(--ink);
+  color: var(--fg);
   font-weight: 700;
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -296,7 +400,7 @@ p { margin: 0 0 var(--space-2); }
 }
 
 /* --- People strip / bios -------------------------------------------------- */
-.bio-rule { border-top: var(--rule-heavy) solid var(--ink); }
+.bio-rule { border-top: var(--rule-heavy) solid var(--rule-color); }
 
 /* --- Fact list (credentials, journals) ------------------------------------ */
 .fact-list {
@@ -304,11 +408,11 @@ p { margin: 0 0 var(--space-2); }
   margin: var(--space-2) 0 var(--space-3);
   padding: 0;
   max-width: var(--measure);
-  border-top: var(--rule-fine) solid var(--ink);
+  border-top: var(--rule-fine) solid var(--rule-color);
 }
 .fact-list li {
   padding: var(--space-1) 0;
-  border-bottom: var(--rule-fine) solid var(--ink);
+  border-bottom: var(--rule-fine) solid var(--rule-color);
   font-size: var(--type-body);
 }
 .field-ink .fact-list, .field-ink .fact-list li { border-color: var(--cream); }
@@ -374,4 +478,5 @@ p { margin: 0 0 var(--space-2); }
 @media (max-width: 40rem) {
   .site-header nav { flex-wrap: wrap; }
   .nav-links { gap: var(--space-2); }
+  .nav-right { gap: var(--space-2); }
 }
