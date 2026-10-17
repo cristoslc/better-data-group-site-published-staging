@@ -298,6 +298,48 @@ p { margin: 0 0 var(--space-2); }
 /* --- People strip / bios -------------------------------------------------- */
 .bio-rule { border-top: var(--rule-heavy) solid var(--ink); }
 
+/* --- Fact list (credentials, journals) ------------------------------------ */
+.fact-list {
+  list-style: none;
+  margin: var(--space-2) 0 var(--space-3);
+  padding: 0;
+  max-width: var(--measure);
+  border-top: var(--rule-fine) solid var(--ink);
+}
+.fact-list li {
+  padding: var(--space-1) 0;
+  border-bottom: var(--rule-fine) solid var(--ink);
+  font-size: var(--type-body);
+}
+.field-ink .fact-list, .field-ink .fact-list li { border-color: var(--cream); }
+
+/* --- Name wall (worked-with companies) ------------------------------------ */
+.name-wall {
+  list-style: none;
+  margin: var(--space-3) 0 var(--space-2);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.name-wall li {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--type-panel);
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  padding: 0 var(--space-3) 0 0;
+}
+.name-wall li + li::before {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  border-bottom: var(--rule) solid var(--orange);
+  margin-right: var(--space-3);
+  vertical-align: 0.25em;
+}
+.field-ink .muted-lead { color: var(--cream); }
+
 /* --- CTA strips ----------------------------------------------------------- */
 .cta-strip { text-align: left; }
 .cta-strip h2 { margin-bottom: var(--space-1); }
