@@ -375,6 +375,12 @@ p { margin: 0 0 var(--space-2); }
   margin-left: 0.35em;
   vertical-align: 0.15em;
 }
+.entry-head-lg .entry-number {
+  /* About's credential panels pair the number with a section-scale h2;
+     grow the number to match so the 01—02—03 rhythm reads with the same
+     number-to-heading weight as the h3 panels on work and contact. */
+  font-size: var(--type-section);
+}
 .field-ink .entry-number { color: var(--cream); }
 .panel-item p { max-width: var(--measure); }
 .panel-item h3 { margin-bottom: var(--space-1); }
