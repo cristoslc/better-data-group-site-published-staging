@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About | Better Data Group</title>
   <meta name="description" content="Find out if it will sell before you build it. Kwong Chan, Executive Director of the DMSB AI Strategic Hub at Northeastern University, studies why customers resist, what they will pay, and which evidence changes the bet. Work with Samsung, Goodyear, VISA, Nike, ASUS, ACER, and General Motors.">
+  <script>
+    /* Apply an explicit Auto/Light/Dark choice before first paint. */
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        if (stored === "light" || stored === "dark") {
+          document.documentElement.setAttribute("data-theme", stored);
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <noscript><style>.theme-switch { display: none; }</style></noscript>
   <link rel="icon" href="img/bdg-logo.png" type="image/png">
   <link rel="stylesheet" href="css/style.css?v=20261017-2">
 </head>

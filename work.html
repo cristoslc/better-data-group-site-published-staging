@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Research Services | Better Data Group</title>
   <meta name="description" content="Explore research on new-product adoption, customer opinions, pricing, and demand. Use market evidence to inform your next product or launch decision.">
+  <script>
+    /* Apply an explicit Auto/Light/Dark choice before first paint. */
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        if (stored === "light" || stored === "dark") {
+          document.documentElement.setAttribute("data-theme", stored);
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <noscript><style>.theme-switch { display: none; }</style></noscript>
   <link rel="icon" href="img/bdg-logo.png" type="image/png">
   <link rel="stylesheet" href="css/style.css?v=20261017-2">
 </head>
