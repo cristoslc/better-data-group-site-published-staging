@@ -156,7 +156,7 @@ body {
   padding: 0;
   flex-wrap: wrap;
 }
-.nav-links a {
+.nav-links a:not(.btn) {
   text-decoration: none;
   color: var(--fg);
   font-size: var(--type-label);
@@ -165,7 +165,7 @@ body {
   text-transform: uppercase;
   padding-bottom: 2px;
 }
-.nav-links a[aria-current="page"] {
+.nav-links a[aria-current="page"]:not(.btn) {
   border-bottom: var(--rule) solid var(--orange);
   color: var(--fg);
 }
